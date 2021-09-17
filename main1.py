@@ -1,48 +1,58 @@
+
+import numpy as np
 import matplotlib.pyplot as plt
-import numpy as  np
-# X vector contain X1,X2
-X=np.array([-6,8])
-# Y vector contain Y1,Y2
-Y=np.array([8,-6])
-m=1
-n=3
-c= float(m/(m+n))
-d= float(n/(m+n))
 
-a_arr=c*np.array([-6,8])
-b_arr=d*np.array([8,-6])
-out_arr= (a_arr + b_arr)
-print(out_arr)
-r=1
-s=1
-p= float(r/(r+s))
-q= float(s/(r+s))
-e_arr=p*np.array([-6,8])
-f_arr=q*np.array([8,-6])
-out_arr=(e_arr + f_arr)
-print(out_arr)
-u=3
-v=1
-i= float(u/(u+v))
-j= float(v/(u+v))
-k_arr=i*np.array([-6,8])
-l_arr=j*np.array([8,-6])
-out_arr= (k_arr + l_arr)
-print(out_arr)
+#Generate line points
+def line_gen(A,B):
+  len =10
+  x_AB = np.zeros((2,len))
+  lam_1 = np.linspace(0,1,len)
+  for i in range(len):
+    temp1 = A + lam_1[i]*(B-A)
+    x_AB[:,i]= temp1.T
+  return x_AB
 
+#Line Plot
+A = np.array([-6,8])
+B = np.array([8,-6])
+D=(1/(1+3))*(np.column_stack((B,A))@np.array([1,3]).T)
+E=(1/(1+1))*(np.column_stack((B,A))@np.array([1,1]).T)
+F=(1/(3+1))*(np.column_stack((B,A))@np.array([3,1]).T)
+print(D,E,F)
+#Generating all lines
+x_AD = line_gen(A,D)
+x_DE = line_gen(D,E)
+x_EF = line_gen(E,F)
+x_FB = line_gen(F,B)
 
-X=([-6,-2.5,1,4.5,8])
-Y=([8,4.5,1,-2.5,-6])
-plt.plot(X,Y,color='blue',marker='o')
-# plt.scatter(a_arr,e_arr,k_arr)
-# plt.scatter(b_arr,f_arr,l_arr)
-plt.xlim(-10,10)
-plt.ylim(-10,10)
-plt.xlabel('x-axis')
-plt.ylabel('y-axis')
-plt.xlabel('x', color='#1C2833')
-plt.ylabel('y', color='#1C2833')
-for i,j in zip(X,Y):
-    plt.text(i,j+0.5,'({},{})'.format(i,j))
-plt.grid()
+#Plotting all lines
+plt.plot(x_AD[0,:],x_AD[1,:],label='$AD$')
+plt.plot(x_DE[0,:],x_DE[1,:],label='$DE$')
+plt.plot(x_EF[0,:],x_EF[1,:],label='$EF$')
+plt.plot(x_FB[0,:],x_FB[1,:],label='$FB$')
+plt.plot(A[0], A[1], 'm')
+plt.text(A[0] * (1 + 0.1), A[1] * (1 - 0.03) , 'A')
+plt.plot(B[0], B[1], 'm')
+plt.text(B[0] * (1 - 0.021), B[1] * (1+0.03) , 'B')
+plt.plot(D[0], D[1], 'm')
+plt.text(D[0] * (1 + 0.1), D[1] * (1 - 0.1) , 'D')
+plt.plot(E[0], E[1], 'm')
+plt.text(E[0] * (1 - 0.2), E[1] * (1 - 0.4) , 'E')
+plt.plot(F[0], F[1], 'm')
+plt.text(F[0] * (1 -0.1), F[1] * (1 + 0.1) , 'F')
+#plt.text(1.0,0.08,'l')
+#plt.text(3.0, 0.08, 'k')
+#plt.text(1.8, 0.75, 'm')
+#plt.text(1.7, 2.59, 'k+l')
+plt.xlabel('$x$')
+plt.ylabel('$y$')
+plt.legend(loc='best')
+plt.grid() # minor
 plt.show()
+
+
+
+
+
+
+
