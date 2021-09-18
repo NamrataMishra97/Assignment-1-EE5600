@@ -15,9 +15,12 @@ def line_gen(A,B):
 #Line Plot
 A = np.array([-6,8])
 B = np.array([8,-6])
-D=(1/(1+3))*(np.column_stack((B,A))@np.array([1,3]).T)
-E=(1/(1+1))*(np.column_stack((B,A))@np.array([1,1]).T)
-F=(1/(3+1))*(np.column_stack((B,A))@np.array([3,1]).T)
+b=np.array([1,3])
+c=np.array([1,1])
+d=np.array([3,1])
+D=(1/(1+3))*(np.block([B,A]@b.T))
+E=(1/(1+1))*(np.block([B,A]@c.T))
+F=(1/(3+1))*(np.block([B,A]@d.T))
 print(D,E,F)
 #Generating all lines
 x_AD = line_gen(A,D)
